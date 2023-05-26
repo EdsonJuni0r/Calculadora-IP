@@ -161,7 +161,7 @@ void calcular()
 		}
 	}
 
-	printf("\n  Ip: %i.%i.%i.%i/%i", ipBloco[0], ipBloco[1], ipBloco[2], ipBloco[3], cidr);
+	printf("\n  IP: %i.%i.%i.%i/%i", ipBloco[0], ipBloco[1], ipBloco[2], ipBloco[3], cidr);
 
 	printf("\n--------------------------------------------");
 
@@ -184,7 +184,7 @@ void calcular()
 
 	printf("\n--------------------------------------------");
 	printf("\nMascara: %i.%i.%i.%i", maskBloco[0], maskBloco[1], maskBloco[2], maskBloco[3]);
-	printf("\nMascara em binário: ");
+	printf("\nMascara em binario: ");
 	for (int i = 0; i < 4; i++)
 	{
 		if (i > 0)
@@ -193,15 +193,11 @@ void calcular()
 		}
 		printBinary(maskBloco[i]);
 	}
-
-	printf("\n--------------------------------------------");
-
-	printf("\nSub-Redes: %i", subRedes);
-
+	printf("\nCIDR: %i", cidr);
 	printf("\n--------------------------------------------");
 
 	printf("\nRede: %i.%i.%i.%i", redeBloco[0], redeBloco[1], redeBloco[2], redeBloco[3]);
-	printf("\nRede em binário: ");
+	printf("\nRede em binario: ");
 	for (int i = 0; i < 4; i++)
 	{
 		if (i > 0)
@@ -210,19 +206,34 @@ void calcular()
 		}
 		printBinary(redeBloco[i]);
 	}
+
 	printf("\n--------------------------------------------");
 
 	printf("\nBroadcast: %i.%i.%i.%i", broadBloco[0], broadBloco[1], broadBloco[2], broadBloco[3]);
+	printf("\nBroadcast em binario: ");
+	for (int i = 0; i < 4; i++)
+	{
+		if (i > 0)
+		{
+			printf(".");
+		}
+		printBinary(broadBloco[i]);
+	}
 
 	printf("\n--------------------------------------------");
 
-	printf("\nPrimeiro: %i.%i.%i.%i", firstBloco[0], firstBloco[1], firstBloco[2], firstBloco[3]);
+	// printf("\nPrimeiro: %i.%i.%i.%i", firstBloco[0], firstBloco[1], firstBloco[2], firstBloco[3]);
+
+	// printf("\n--------------------------------------------");
+
+	// printf("\nUltimo: %i.%i.%i.%i", lastBloco[0], lastBloco[1], lastBloco[2], lastBloco[3]);
+
+	// printf("\n--------------------------------------------");
+
+	printf("\nSub-Redes: %i", subRedes);
 
 	printf("\n--------------------------------------------");
 
-	printf("\nUltimo: %i.%i.%i.%i", lastBloco[0], lastBloco[1], lastBloco[2], lastBloco[3]);
-
-	printf("\n--------------------------------------------");
 	hosts = (int)pow(2, 32 - cidr) - 2;
 	printf("\nHosts: %i", hosts);
 	printf("\n--------------------------------------------");
@@ -234,23 +245,23 @@ void exibir_resultado()
 	{
 		if (ipBloco[0] > 255 || ipBloco[1] > 255 || ipBloco[2] > 255 || ipBloco[3] > 255)
 		{
-			printf("\nIP Invalido!");
+			printf("\nIP Invalido!Por favor, digite corretamente!!!");
 		}
 		else if ((ipBloco[1] == 255 && ipBloco[2] == 255 && ipBloco[3] == 255) || (ipBloco[2] == 255 && ipBloco[3] == 255) || (ipBloco[3] == 255))
 		{
-			printf("\nIP invalido!");
+			printf("\nIP invalido! Por faor, digite corretamente!!!");
 		}
 		else if (ipBloco[0] == 127 && ipBloco[1] == 0)
 		{
-			printf("O IP digitado é reservado para Loopback!");
+			printf("O IP digitado: reservado para Loopback!");
 		}
 		else if (((ipBloco[0] != 255 && ipBloco[1] == 0 && ipBloco[2] == 0 && ipBloco[3] == 0) || (ipBloco[0] != 255 && ipBloco[2] == 0 && ipBloco[3] == 0) || (ipBloco[0] != 255 && ipBloco[3] == 0)))
 		{
-			printf("\nIP e um endereço de rede ou Invalido!");
+			printf("\nIP e um endereco de rede ou Invalido!");
 		}
 		else if ((ipBloco[0] == 255 && ipBloco[1] == 255 && ipBloco[2] == 255 && ipBloco[3] == 0) || (ipBloco[0] == 255 && ipBloco[1] == 255 && ipBloco[2] == 0 && ipBloco[3] == 0) || (ipBloco[0] == 255 && ipBloco[1] == 0 && ipBloco[2] == 0 && ipBloco[3] == 0))
 		{
-			printf("\nIP Invalido!");
+			printf("\nIP Invalido! Por favor, digite corretamente!!!");
 		}
 		else
 		{
@@ -266,24 +277,55 @@ void exibir_resultado()
 int main()
 {
 
-	printf("Digite o ip");
+	int choice;
 
-	printf("\nOcteto 1: ");
-	scanf("%i", &ipBloco[0]);
+	do
+	{
+		printf("Menu\n\n");
+		printf("1. Calcular\n");
+		printf("2. Sair\n");
+		scanf("%d", &choice);
 
-	printf("Octeto 2: ");
-	scanf("%i", &ipBloco[1]);
+		switch (choice)
+		{
+		case 1:
+			printf("\nDigite o IP");
+			printf("\nOcteto 1: ");
+			scanf("%i", &ipBloco[0]);
+			printf("Octeto 2: ");
+			scanf("%i", &ipBloco[1]);
+			printf("Octeto 3: ");
+			scanf("%i", &ipBloco[2]);
+			printf("Octeto 4: ");
+			scanf("%i", &ipBloco[3]);
+			printf("Tamanho da Mascara: ");
+			scanf("%i", &cidr);
+			exibir_resultado();
 
-	printf("Octeto 3: ");
-	scanf("%i", &ipBloco[2]);
+			printf("\n\nDeseja calcular um novo endereco? (1 - Sim, 2 - Nao): ");
+			scanf("%d", &choice);
+			if (choice == 1)
+			{
+				break;
+			}
+			else
+			{
+				printf("\nSaindo do programa.\n");
+				exit(0);
+			}
+			break;
 
-	printf("Octeto 4: ");
-	scanf("%i", &ipBloco[3]);
+		case 2:
+			printf("\nSaindo do programa.\n");
+			exit(0);
+			break;
 
-	printf("Tamanho da Mascara: ");
-	scanf("%i", &cidr);
+		default:
+			printf("\nEscolha invalida! Tente novamente.\n");
+			break;
+		}
 
-	exibir_resultado();
+	} while (choice != 2);
 
 	return 0;
 }
